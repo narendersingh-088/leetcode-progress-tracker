@@ -1,0 +1,33 @@
+{
+  "name": "leetcode-progress-tracker",
+  "version": "1.0.0",
+  "description": "A full-stack web application to track and analyze LeetCode progress using React, Node.js, Express, and MySQL.",
+  "main": "index.js",
+  "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/narendersingh-088/leetcode-progress-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/narendersingh-088/leetcode-progress-tracker/issues"
+  },
+  "homepage": "https://github.com/narendersingh-088/leetcode-progress-tracker#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.22.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
