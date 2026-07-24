@@ -54,7 +54,7 @@ const getUserProgress = async (req, res) => {
             JOIN problems p ON up.problem_id = p.id
             WHERE up.user_id = ?
             ORDER BY up.date_solved DESC
-            `, [userId])
+            `, [userId]);
 
             res.status(200).json(rows);
 
@@ -64,4 +64,80 @@ const getUserProgress = async (req, res) => {
     }
 };
 
-module.exports = {upsertProgress, getUserProgress};
+const getRevisionList = async (req, res) => {
+    try{
+        const userId = req.user.userId;
+
+        const[rows] = await db.query(`
+            SELECT
+            up.id, up.status, up.date_solved, up.notes, up.time_taken,
+            p.id AS problem_id, p.title, p.difficulty, p.topic, p.url
+            FROM user_progress up
+            JOIN problems p ON up.problem_id = p.id
+            WHERE up.user_id = ? AND up.revision = True
+            ORDER BY up.date_solved DESC
+            `, [userId]);
+
+            res.status(200).json(rows);
+
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ error : 'Server error fetching revision list'});
+    }
+};
+
+const updateProgress = async (req, res) => {
+    try{
+        const userId = req.user.userId;
+        const {id} = req.params;
+        const {status, notes, revision, time_taken} = req.body;
+
+        const[existing] = await db.query(
+            'SELECT id from user_progress WHERE id = ? AND user_id = ?', 
+            [id, userId]
+        );
+
+        if(existing.length === 0){
+            return res.status(404).json({ error : 'Progress entry not found'});
+        }
+
+        await db.query(`
+            UPDATE user_progress
+            SET status = COALESCE(?, status),
+                notes = COALESCE(?, notes),
+                revision = COALESCE(?, revision),
+                time_taken = COALESCE(?, time_taken)
+            WHERE id = ? AND user_id = ?
+            `, [status, notes, revision, time_taken, id, userId]);
+
+            res.status(200).json({ message : 'Progress updated'});
+
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ error : 'Server error updating progress'});
+    }
+};
+
+const deleteProgress = async (req, res) => {
+    try{
+        const userId = req.user.userId;
+        const {id} = req.params;
+
+        const [result] = await db.query(
+            'DELETE FROM user_progress WHERE id = ? AND user_id = ?',
+            [id, userId]
+        );
+
+        if(result.affectedRows === 0){
+            return res.status(404).json({ error : 'Progress entry not found'});
+        }
+
+        res.status(200).json({ message : 'Progress entry deleted'});
+
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ error : 'Server error deleting progress'});
+    }
+};
+
+module.exports = {upsertProgress, getUserProgress, getRevisionList, updateProgress, deleteProgress};
