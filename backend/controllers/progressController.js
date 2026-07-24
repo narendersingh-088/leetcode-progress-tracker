@@ -29,11 +29,11 @@ const upsertProgress = async (req, res) => {
         await db.query(query, 
                 [userId, 
                 problem_id, 
-                status || 'Solved', 
-                date_solved || new Date().toISOString().slice(0, 10), 
-                notes || null, 
-                revision || false, 
-                time_taken || null]);
+                status ?? 'Solved', 
+                date_solved ?? new Date().toISOString().slice(0, 10), 
+                notes ?? null, 
+                revision ?? false, 
+                time_taken ?? null]);
 
         res.status(200).json({ message : 'Progress saved'});
 
