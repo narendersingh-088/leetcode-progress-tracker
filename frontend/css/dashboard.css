@@ -1,0 +1,54 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #1a1a2e;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: #16213e;
+}
+
+.navbar h2 { font-size: 18px; }
+.navbar span { margin-right: 16px; color: #a0a0c0; }
+
+.navbar button {
+  background: #e94560;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dashboard { padding: 32px; max-width: 900px; margin: 0 auto; }
+.dashboard h1 { margin-bottom: 24px; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  background: #16213e;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  border-left: 4px solid #e94560;
+}
+
+.stat-card.easy { border-left-color: #4caf50; }
+.stat-card.medium { border-left-color: #ff9800; }
+.stat-card.hard { border-left-color: #f44336; }
+
+.stat-label { font-size: 13px; color: #a0a0c0; margin-bottom: 8px; }
+.stat-value { font-size: 28px; font-weight: 600; }
+
+.error { color: #ff6b6b; margin-top: 16px; text-align: center; }
