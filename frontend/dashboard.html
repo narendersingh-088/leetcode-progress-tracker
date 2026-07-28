@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard — LeetCode Tracker</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <nav class="navbar">
+    <h2>LeetCode Tracker</h2>
+    <div>
+      <span id="usernameDisplay"></span>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </nav>
+
+  <main class="dashboard">
+    <h1>Dashboard</h1>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <p class="stat-label">Total Solved</p>
+        <p class="stat-value" id="totalSolved">–</p>
+      </div>
+      <div class="stat-card easy">
+        <p class="stat-label">Easy</p>
+        <p class="stat-value" id="easyCount">–</p>
+      </div>
+      <div class="stat-card medium">
+        <p class="stat-label">Medium</p>
+        <p class="stat-value" id="mediumCount">–</p>
+      </div>
+      <div class="stat-card hard">
+        <p class="stat-label">Hard</p>
+        <p class="stat-value" id="hardCount">–</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Current Streak</p>
+        <p class="stat-value" id="currentStreak">–</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-label">Acceptance Rate</p>
+        <p class="stat-value" id="acceptanceRate">–</p>
+      </div>
+    </div>
+
+    <p id="errorMsg" class="error"></p>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
