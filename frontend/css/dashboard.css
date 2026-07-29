@@ -52,3 +52,41 @@ body {
 .stat-value { font-size: 28px; font-weight: 600; }
 
 .error { color: #ff6b6b; margin-top: 16px; text-align: center; }
+
+.dashboard-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.panel {
+  background: #16213e;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.panel h2 { font-size: 16px; margin-bottom: 16px; color: #a0a0c0; }
+
+.topic-row { margin-bottom: 14px; }
+
+.topic-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.topic-bar-track {
+  background: #0f3460;
+  border-radius: 6px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.topic-bar-fill {
+  background: #e94560;
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}

@@ -44,11 +44,24 @@
       </div>
     </div>
 
+
+    <div class="dashboard-row">
+        <div class="panel">
+          <h2>Difficulty Breakdown</h2>
+          <canvas id="difficultyChart"></canvas>
+        </div>
+        <div class="panel">
+          <h2>Topic-wise Progress</h2>
+          <div id="topicProgressList"></div>
+        </div>
+      </div>
+
     <p id="errorMsg" class="error"></p>
   </main>
 
   <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/dashboard.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </body>
 </html>
