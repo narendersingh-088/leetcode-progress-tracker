@@ -71,4 +71,34 @@ const getStats = async (req, res) => {
     }
 };
 
-module.exports = {getStats};
+const getTopicProgress = async (req, res) => {
+    try{
+        const userId = req.user.userId;
+
+        const [rows] = await db.query(`
+            SELECT 
+                p.topic,
+                COUNT(DISTINCT p.id) AS totalProblems,
+                COUNT(DISTINCT CASE WHEN up.status = 'Solved' AND up.user_id = ? THEN up.problem_id END) AS solvedCount
+                FROM problems p
+                LEFT JOIN user_progress up ON up.problem_id = p.id
+                GROUP BY p.topic
+                ORDER BY p.topic
+            `, [userId]);
+        
+        const topicProgress = rows.map( r =>({
+            topic: r.topic,
+            totalProblems: r.totalProblems,
+            solvedCount: r.solvedCount,
+            percent: r.totalProblems > 0 ? Math.round((r.solvedCount / r.totalProblems) * 100) : 0
+        }));
+
+        res.status(200).json(topicProgress);
+
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ error : 'Server error fetching topic progress'});
+    }
+};
+
+module.exports = {getStats, getTopicProgress};
