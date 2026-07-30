@@ -85,5 +85,67 @@ async function loadTopicProgress(){
     }
 }
 
+async function loadHeatmap(){
+    try{
+        const heatmap = await apiRequest('/dashboard/heatmap');
+        const container = document.getElementById('heatmapContainer');
+        container.innerHTML = '';
+
+        const today = new Date();
+        const days = [];
+
+        for(let i = 89; i >= 0 ; i--){
+            const d = new Date(today);
+            d.setDate(d.getDate() - i);
+            days.push(d.toISOString().slice(0, 10));
+        }
+
+        days.forEach(dateStr => {
+            const count = heatmap[dateStr] || 0;
+            const cell = document.createElement('div');
+            cell.className = 'heatmap-cell';
+            cell.title = `${dateStr}: ${count} solved`;
+
+            if(count === 0) cell.classList.add('level-0');
+            else if(count === 1) cell.classList.add('level-1');
+            else if(count <= 3) cell.classList.add('level-2');
+            else cell.classList.add('level-3');
+
+            container.appendChild(cell);
+        });
+
+    }catch(err){
+        console.error(err);
+    }
+}
+
+async function loadHistory(){
+    try{
+        const history = await apiRequest('/progress');
+        const tbody = document.getElementById('historyTableBody');
+        tbody.innerHTML = '';
+
+        history.forEach(entry => {
+            const row = document.createElement('tr');
+            const dateDisplay = entry.date_solved
+            ? new Date(entry.date_solved).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+            : '-';
+
+            row.innerHTML = `
+                <td>${entry.title}</td>
+                <td><span class="badge badge-${entry.difficulty.toLowerCase()}">${entry.difficulty}</span></td>
+                <td>${entry.status}</td>
+                <td>${dateDisplay}</td>
+            `;
+            tbody.appendChild(row);
+        });
+
+    }catch(err){
+        console.error(err);
+    }
+}
+
 loadStats();
 loadTopicProgress();
+loadHeatmap();
+loadHistory();
