@@ -55,7 +55,27 @@
           <h2>Topic-wise Progress</h2>
           <div id="topicProgressList"></div>
         </div>
-      </div>
+    </div>
+
+    <div class="panel" style="margin-top: 16px;">
+      <h2>Activity (Last 90 Days)</h2>
+      <div id="heatmapContainer" class="heatmap-grid"></div>
+    </div>
+
+    <div class="panel" style="margin-top: 16px;">
+      <h2>Problem History</h2>
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Problem</th>
+            <th>Difficulty</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="historyTableBody"></tbody>
+      </table>
+    </div>
 
     <p id="errorMsg" class="error"></p>
   </main>
