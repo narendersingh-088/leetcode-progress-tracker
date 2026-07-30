@@ -101,4 +101,31 @@ const getTopicProgress = async (req, res) => {
     }
 };
 
-module.exports = {getStats, getTopicProgress};
+const getHeatmapData = async (req, res) => {
+    try{
+        const userId = req.user.userId;
+
+        const[rows] = await db.query(`
+            SELECT date_solved, COUNT(*) AS count
+            FROM user_progress
+            WHERE user_id = ? AND status = 'Solved' AND date_solved IS NOT NULL
+                AND date_solved >= DATE_SUB(CURDATE(), INTERVAL 90 DAY)
+            GROUP BY date_solved
+            ORDER BY date_solved ASC
+            `, [userId]);
+
+        const heatmap = {};
+        rows.forEach(r => {
+            const dateKey = r.date_solved.toISOString().slice(0, 10);
+            heatmap[dateKey] = r.count;
+        });
+
+        res.status(200).json(heatmap);
+
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ error : 'Server error fetching heatmap data'});
+    }
+};
+
+module.exports = {getStats, getTopicProgress, getHeatmapData};
