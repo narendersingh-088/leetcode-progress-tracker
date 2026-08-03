@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Problems — LeetCode Tracker</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <nav class="navbar">
+    <h2>LeetCode Tracker</h2>
+    <div class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="problems.html">Problems</a>
+      <a href="revision.html">Revision</a>
+    </div>
+    <div>
+      <span id="usernameDisplay"></span>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </nav>
+
+  <main class="dashboard">
+    <h1>Problems</h1>
+
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="Search by title...">
+      <select id="topicFilter">
+        <option value="">All Topics</option>
+      </select>
+      <select id="difficultyFilter">
+        <option value="">All Difficulties</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+    </div>
+
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Difficulty</th>
+          <th>Topic</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="problemsTableBody"></tbody>
+    </table>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/problems.js"></script>
+</body>
+</html>
