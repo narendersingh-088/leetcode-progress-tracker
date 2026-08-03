@@ -17,6 +17,9 @@ body {
 
 .navbar h2 { font-size: 18px; }
 .navbar span { margin-right: 16px; color: #a0a0c0; }
+.nav-links { display: flex; gap: 20px; }
+.nav-links a { color: #a0a0c0; text-decoration: none; font-size: 14px; }
+.nav-links a:hover { color: #fff; }
 
 .navbar button {
   background: #e94560;
