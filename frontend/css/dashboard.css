@@ -138,3 +138,42 @@ body {
 .badge-easy { background: #1b3a1e; color: #4caf50; }
 .badge-medium { background: #3a2a1b; color: #ff9800; }
 .badge-hard { background: #3a1b1b; color: #f44336; }
+
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filter-bar input, .filter-bar select {
+  padding: 10px 12px;
+  background: #16213e;
+  border: 1px solid #0f3460;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.filter-bar input { flex: 1; }
+
+.mark-solved-btn {
+  background: #e94560;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.mark-solved-btn:disabled { opacity: 0.6; cursor: default; }
+
+.unmark-btn {
+  background: transparent;
+  border: 1px solid #e94560;
+  color: #e94560;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
