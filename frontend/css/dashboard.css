@@ -195,3 +195,25 @@ body {
   cursor: pointer;
   font-size: 13px;
 }
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+.analytics-label { font-size: 12px; color: var(--text-secondary); }
+.analytics-grid p { font-size: 18px; font-weight: 600; margin-top: 4px; }
+
+.theme-toggle-btn {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--bg-input);
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--bg-input);
+}

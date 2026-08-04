@@ -145,7 +145,21 @@ async function loadHistory(){
     }
 }
 
+async function loadAnalytics() {
+  try {
+    const a = await apiRequest('/dashboard/analytics');
+    document.getElementById('mostSolvedTopic').textContent = a.mostSolvedTopic;
+    document.getElementById('hardestSolved').textContent = a.hardestSolved;
+    document.getElementById('avgPerDay').textContent = a.avgProblemsPerDay;
+    document.getElementById('avgGap').textContent = `${a.avgTimeBetweenSolves} days`;
+    document.getElementById('longestStreak').textContent = `${a.longestStreak} days`;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 loadStats();
 loadTopicProgress();
 loadHeatmap();
 loadHistory();
+loadAnalytics();
