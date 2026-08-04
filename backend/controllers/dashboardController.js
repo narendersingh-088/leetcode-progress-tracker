@@ -128,4 +128,81 @@ const getHeatmapData = async (req, res) => {
     }
 };
 
-module.exports = {getStats, getTopicProgress, getHeatmapData};
+const getAnalytics = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    // Most solved topic
+    const [[mostSolvedTopic]] = await db.query(`
+      SELECT p.topic, COUNT(*) AS count
+      FROM user_progress up JOIN problems p ON up.problem_id = p.id
+      WHERE up.user_id = ? AND up.status = 'Solved'
+      GROUP BY p.topic ORDER BY count DESC LIMIT 1
+    `, [userId]);
+
+    // Hardest solved (Hard > Medium > Easy), most recent if tied
+    const [[hardestSolved]] = await db.query(`
+      SELECT p.title, p.difficulty
+      FROM user_progress up JOIN problems p ON up.problem_id = p.id
+      WHERE up.user_id = ? AND up.status = 'Solved'
+      ORDER BY FIELD(p.difficulty, 'Hard', 'Medium', 'Easy'), up.date_solved DESC
+      LIMIT 1
+    `, [userId]);
+
+    // Distinct solved dates, for avg/day, avg gap, and longest streak
+    const [dateRows] = await db.query(`
+      SELECT DISTINCT date_solved
+      FROM user_progress
+      WHERE user_id = ? AND status = 'Solved' AND date_solved IS NOT NULL
+      ORDER BY date_solved ASC
+    `, [userId]);
+
+    const [[{ totalSolved }]] = await db.query(`
+      SELECT COUNT(*) AS totalSolved FROM user_progress
+      WHERE user_id = ? AND status = 'Solved'
+    `, [userId]);
+
+    let avgProblemsPerDay = 0, avgTimeBetweenSolves = 0, longestStreak = 0;
+
+    if (dateRows.length > 0) {
+      const dates = dateRows.map(r => new Date(r.date_solved));
+      const firstDate = dates[0];
+      const lastDate = dates[dates.length - 1];
+      const spanDays = Math.max(1, Math.round((lastDate - firstDate) / 86400000) + 1);
+
+      avgProblemsPerDay = +(totalSolved / spanDays).toFixed(2);
+
+      // Average gap between consecutive active days
+      if (dates.length > 1) {
+        let totalGap = 0;
+        for (let i = 1; i < dates.length; i++) {
+          totalGap += (dates[i] - dates[i - 1]) / 86400000;
+        }
+        avgTimeBetweenSolves = +(totalGap / (dates.length - 1)).toFixed(1);
+      }
+
+      // Longest streak — walk through sorted dates, track consecutive runs
+      let currentRun = 1;
+      longestStreak = 1;
+      for (let i = 1; i < dates.length; i++) {
+        const diff = (dates[i] - dates[i - 1]) / 86400000;
+        currentRun = diff === 1 ? currentRun + 1 : 1;
+        longestStreak = Math.max(longestStreak, currentRun);
+      }
+    }
+
+    res.status(200).json({
+      mostSolvedTopic: mostSolvedTopic ? mostSolvedTopic.topic : '–',
+      hardestSolved: hardestSolved ? `${hardestSolved.title} (${hardestSolved.difficulty})` : '–',
+      avgProblemsPerDay,
+      avgTimeBetweenSolves,
+      longestStreak
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error fetching analytics' });
+  }
+};
+
+module.exports = {getStats, getTopicProgress, getHeatmapData, getAnalytics};
