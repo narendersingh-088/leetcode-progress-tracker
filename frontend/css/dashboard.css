@@ -1,9 +1,27 @@
+:root {
+  --bg-main: #1a1a2e;
+  --bg-panel: #16213e;
+  --bg-input: #0f3460;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0c0;
+  --accent: #e94560;
+}
+
+body.light-mode {
+  --bg-main: #f4f5fa;
+  --bg-panel: #ffffff;
+  --bg-input: #eef0f7;
+  --text-primary: #1a1a2e;
+  --text-secondary: #5a5a7a;
+  --accent: #e94560;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #1a1a2e;
-  color: #fff;
+  background: var(--bg-main);
+  color: var(--text-primary);
   min-height: 100vh;
 }
 
@@ -12,18 +30,18 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 16px 32px;
-  background: #16213e;
+  background: var(--bg-panel);
 }
 
 .navbar h2 { font-size: 18px; }
-.navbar span { margin-right: 16px; color: #a0a0c0; }
+.navbar span { margin-right: 16px; color: var(--text-secondary); }
 .nav-links { display: flex; gap: 20px; }
-.nav-links a { color: #a0a0c0; text-decoration: none; font-size: 14px; }
-.nav-links a:hover { color: #fff; }
+.nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
+.nav-links a:hover { color: var(--text-primary); }
 
 .navbar button {
-  background: #e94560;
-  color: #fff;
+  background: var(--accent);
+  color: var(--text-primary);
   border: none;
   padding: 8px 16px;
   border-radius: 6px;
@@ -40,18 +58,18 @@ body {
 }
 
 .stat-card {
-  background: #16213e;
+  background: var(--bg-panel);
   padding: 20px;
   border-radius: 10px;
   text-align: center;
-  border-left: 4px solid #e94560;
+  border-left: 4px solid var(--accent);
 }
 
 .stat-card.easy { border-left-color: #4caf50; }
 .stat-card.medium { border-left-color: #ff9800; }
 .stat-card.hard { border-left-color: #f44336; }
 
-.stat-label { font-size: 13px; color: #a0a0c0; margin-bottom: 8px; }
+.stat-label { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
 .stat-value { font-size: 28px; font-weight: 600; }
 
 .error { color: #ff6b6b; margin-top: 16px; text-align: center; }
@@ -64,12 +82,12 @@ body {
 }
 
 .panel {
-  background: #16213e;
+  background: var(--bg-panel);
   padding: 20px;
   border-radius: 10px;
 }
 
-.panel h2 { font-size: 16px; margin-bottom: 16px; color: #a0a0c0; }
+.panel h2 { font-size: 16px; margin-bottom: 16px; color: var(--text-secondary); }
 
 .topic-row { margin-bottom: 14px; }
 
@@ -81,14 +99,14 @@ body {
 }
 
 .topic-bar-track {
-  background: #0f3460;
+  background: var(--bg-input);
   border-radius: 6px;
   height: 10px;
   overflow: hidden;
 }
 
 .topic-bar-fill {
-  background: #e94560;
+  background: var(--accent);
   height: 100%;
   border-radius: 6px;
   transition: width 0.3s ease;
@@ -105,7 +123,7 @@ body {
   border-radius: 2px;
 }
 
-.level-0 { background: #0f3460; }
+.level-0 { background: var(--bg-input); }
 .level-1 { background: #2e7d32; }
 .level-2 { background: #4caf50; }
 .level-3 { background: #81c784; }
@@ -118,15 +136,15 @@ body {
 
 .history-table th {
   text-align: left;
-  color: #a0a0c0;
+  color: var(--text-secondary);
   font-weight: 500;
   padding: 8px;
-  border-bottom: 1px solid #0f3460;
+  border-bottom: 1px solid var(--bg-input);
 }
 
 .history-table td {
   padding: 10px 8px;
-  border-bottom: 1px solid #0f3460;
+  border-bottom: 1px solid var(--bg-input);
 }
 
 .badge {
@@ -147,18 +165,18 @@ body {
 
 .filter-bar input, .filter-bar select {
   padding: 10px 12px;
-  background: #16213e;
-  border: 1px solid #0f3460;
+  background: var(--bg-panel);
+  border: 1px solid var(--bg-input);
   border-radius: 6px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 14px;
 }
 
 .filter-bar input { flex: 1; }
 
 .mark-solved-btn {
-  background: #e94560;
-  color: #fff;
+  background: var(--accent);
+  color: var(--text-primary);
   border: none;
   padding: 6px 12px;
   border-radius: 6px;
@@ -170,8 +188,8 @@ body {
 
 .unmark-btn {
   background: transparent;
-  border: 1px solid #e94560;
-  color: #e94560;
+  border: 1px solid var(--accent);
+  color: var(--accent);
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
